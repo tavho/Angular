@@ -1,0 +1,136 @@
+¿Cuáles son y cómo funcionan las "Estructuras de Control" en SASS o SCSS?
+
+1.	Condicionales con la directiva @if
+Esta directiva toma una expresión y aplica un estilo si la expresión evaluada devuelve true. 
+.contenedor{
+	width:50px;
+	height:50px;	
+}
+$colorear : true !default;
+.contenedor{
+	@if $colorear{
+		background-color: #0080C3;
+	  }
+@else{
+background-color: transparent;
+	  }
+}
+
+2.	@for
+Con esta directiva se puede realizar bucles a ajustar los estilos basándonos en el valor del contador. Podemos crear un bucle for de 2 formas: 
+Mediante through:  ($contador from valor_inicio through valor_final)
+Empleando to: ($contador from valor_inicio to valor_final)
+La diferencia que hay entre ambos métodos es que con through se incluye el valor_final mientras que con to no tiene en cuenta el último valor.
+Probemos primero con through donde iremos aplicando estilo a 3 párrafos que son hijos de .contendor
+
+
+
+@for $hijo from 1 through 3 {
+	.contenedor p:nth-child( #{$hijo} ) {
+		font-size: 2em;	
+	}
+}
+@for $tamano from 1 to 3 {
+  	.cabecera-#{$tamano} {
+ font-size: 2em * $tamano;
+ }
+}
+
+3.	@each
+Con esta directiva también creamos bucles pero en esta ocasión se proporciona una lista de elementos que determina cuando la operación se ha realizado.
+Podemos crear un  bucle con un array que contiene los nombres de los iconos de las redes sociales pudiendo asociar al background-image la red social correspondiente
+$redes: twitter facebook google;
+ @each $red in $redes {
+ 	 .#{$red} {
+    		background-image: url(/imagenes/iconos/#{$red}.png);
+   		 width:25px;
+    		height:25px;
+  	}
+}
+Resultado: 
+
+.twitter {
+ 	 background-image: url(/imagenes/iconos/twitter.png);
+  width: 25px;
+  height: 25px;
+}
+ 
+.facebook {
+  background-image: url(/imagenes/iconos/facebook.png);
+  width: 25px;
+  height: 25px;
+}
+ 
+.google {
+  background-image: url(/imagenes/iconos/google.png);
+  width: 25px;
+  height: 25px;
+}
+
+4.	@while
+Cuando emplearnos la directiva @while para crear un bucle no conocemos exactamente la condición necesaria para salir del bucle. 
+$elementos: 3;
+ 
+@while $elementos > 0 {
+  	 .caja-#{$elementos} {
+ 		   width: 100% / $elementos;
+  }
+ 	 $elementos: $elementos - 1;
+}
+Tenemos que ir restando a $elmentos ya que de lo contrario nunca se cumpliraria la condición para salir del bucle entrando en un bucle sin fin. 
+
+.caja-3 {
+  	width: 33.33333%;
+}
+ 
+.caja-2 {
+ 	 width: 50%;
+}
+ 
+.caja-1 {
+  	width: 100%;
+}
+
+Ciclo de vida de los componentes de Angular
+
+En Angular, cada componente tiene un ciclo de vida, una cantidad de etapas diferentes que atraviesa. Hay 8 etapas diferentes en el ciclo de vida de los componentes. Cada etapa se denomina lifecycle hook event o en ‘evento de enlace de ciclo de vida’. Podemos utilizar estos eventos en diferentes fases de nuestra aplicación para obtener el control de los componentes. Como un componente es una clase de TypeScript, cada componente debe tener un método constructor.
+ngOnChanges: Este evento se ejecuta cada vez que se cambia un valor de un input control dentro de un componente. Se activa primero cuando se cambia el valor de una propiedad vinculada. Siempre recibe un change data map o mapa de datos de cambio, que contiene el valor actual y anterior de la propiedad vinculada envuelta en un SimpleChange.
+ngOnInit: Se ejecuta una vez que Angular ha desplegado los data-bound properties(variables vinculadas a datos) o cuando el componente ha sido inicializado, una vez que ngOnChanges se haya ejecutado. Este evento es utilizado principalmente para inicializar la data en el componente.
+ngDoCheck: Se activa cada vez que se verifican las propiedades de entrada de un componente. Este método nos permite implementar nuestra propia lógica o algoritmo de detección de cambios personalizado para cualquier componente.
+ngAfterContentInit: Se ejecuta cuando Angular realiza cualquier muestra de contenido dentro de las vistas de componentes y justo después de ngDoCheck. Actuando una vez que todas las vinculaciones del componente deban verificarse por primera vez. Está vinculado con las inicializaciones del componente hijo.
+ngAfterContentChecked: Se ejecuta cada vez que el contenido del componente ha sido verificado por el mecanismo de detección de cambios de Angular; se llama después del método ngAfterContentInit. Este también se invoca en cada ejecución posterior de ngDoCheck y está relacionado principalmente con las inicializaciones del componente hijo.
+ngAfterViewInit: Se ejecuta cuando la vista del componente se ha inicializado por completo. Este método se inicializa después de que Angular ha inicializado la vista del componente y las vistas secundarias. Se llama después de ngAfterContentChecked. Solo se aplica a los componentes.
+ngAfterViewChecked: Se ejecuta después del método ngAfterViewInit y cada vez que la vista del componente verifique cambios. También se ejecuta cuando se ha modificado cualquier enlace de las directivas secundarias. Por lo tanto, es muy útil cuando el componente espera algún valor que proviene de sus componentes secundarios.
+ngOnDestroy: Este método se ejecutará justo antes de que Angular destruya los componentes. Es muy útil para darse de baja de los observables y desconectar los event handlers para evitar memory leaks o fugas de memoria.
+
+¿Cuál es la lista de comandos "ng cli" y para qué sirven?
+
+•	Add: Agrega soporte para una biblioteca externa al proyecto.
+•	Analytics: Configura la recopilación de métricas de uso de CLI angular. 
+•	Build: Compila una aplicación angular en un directorio de salida llamado dist / en la ruta de salida dada. Debe ejecutarse desde un directorio de espacio de trabajo.
+•	Config: Recupera o establece valores de configuración angular en el archivo angular.json para el espacio de trabajo.
+•	Deploy: Invoca el generador de despliegue para un proyecto específico o para el proyecto predeterminado en el espacio de trabajo.
+•	Doc: Abre la documentación oficial de Angular (angular.io) en un navegador y busca una palabra clave determinada.
+•	E2e: Crea y sirve una aplicación Angular, luego ejecuta pruebas de extremo a extremo utilizando Protractor.
+•	Generate: Genera y / o modifica archivos basados en un esquema.
+•	Help: Enumera los comandos disponibles y sus breves descripciones.
+•	Lint: Ejecuta herramientas de linting en el código de la aplicación Angular en una carpeta de proyecto determinada.
+•	New: Crea un nuevo espacio de trabajo y una aplicación angular inicial.
+•	Run: Ejecuta un objetivo de Architect con una configuración de generador personalizada opcional definida en el proyecto.
+•	Serve: Crea y sirve la aplicación, reconstruyéndose en los cambios de archivos.
+•	Test: Ejecuta pruebas unitarias en un proyecto.
+•	Update: Actualiza la aplicación y sus dependencias. 
+•	Version: Salidas versión CLI angular.
+•	Xi18n: Extrae mensajes i18n del código fuente.
+
+
+¿Qué es RXJS, para qué sirve y cómo se usa?
+
+RxJs es una librería que toma lo mejor de patrones como el patrón observer, el patrón iterador y paradigmas como la programación funcional como reza el eslogan oficial. Esta diversidad de elementos hace que, en ocasiones, sea una librería con una curva de aprendizaje un poco intimidatoria por el cambio que supone frente a otros paradigmas o patrones más utilizados y con los que seguramente nos sentimos más familiarizados. 
+RxJS permite representar flujos de datos asíncronos con Observables, consultar los flujos de datos asíncronos utilizando los operadores y parametrizar la concurrencia en los flujos de datos asíncronos usando Schedulers.
+La programación Reactiva es programación orientada al manejo de streams de datos asíncronos y la propagación del cambio. Un stream es un flujo de datos y tradicionalmente los streams han estado ligados a operaciones I/O como lectura/escritura de ficheros o querys a base de datos. En este se establece las bases de los sistemas reactivos, los cuales deben ser:
+•	Responsivos: aseguran la calidad del servicio cumpliendo unos tiempos de respuesta establecidos.
+•	Resilientes: se mantienen responsivos incluso cuando se enfrentan a situaciones de error.
+•	Elásticos: se mantienen responsivos incluso ante aumentos en la carga de trabajo.
+•	Orientados a mensajes: minimizan el acoplamiento entre componentes al establecer interacciones basadas en el intercambio de mensajes de manera asíncrona.
+
